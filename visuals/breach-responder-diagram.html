@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Breach Responder works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #0B121A; font-family: Inter, system-ui, sans-serif; color: #E6EDF3; }
+  .board { width: 1440px; height: 720px; padding: 64px; background: #0F1720; display: flex; flex-direction: column; font-size: 15px; line-height: 22px; }
+  h1 { margin: 0; font-size: 32px; line-height: 40px; font-weight: 700; letter-spacing: -0.01em; }
+  .sub { margin: 8px 0 0; font-size: 16px; line-height: 24px; color: #9FB0C2; }
+  .flow { margin-top: 40px; display: flex; align-items: center; }
+  .band { flex: none; display: flex; flex-direction: column; gap: 8px; padding: 8px 16px 16px; border: 1px dashed #3A4B5E; border-radius: 16px; background: #121C27; }
+  .band-label { font-size: 13px; line-height: 16px; color: #9FB0C2; }
+  .band-row { display: flex; align-items: center; }
+  .card { flex: none; width: 168px; height: 184px; padding: 12px; display: flex; align-items: center; justify-content: center; text-align: center; background: #16212E; border: 1px solid #2B4A3E; border-radius: 12px; }
+  .card.you { background: #1E2B3A; border-color: #3A4B5E; }
+  .card.approve { border: 2px solid #F5B65A; }
+  .card.out { background: #123A2E; border-color: #34D399; }
+  .card b { display: block; }
+  .agent { display: block; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; }
+  .cap { display: block; color: #9FB0C2; font-size: 13px; }
+  .ro { display: block; color: #A7F3D0; font-size: 13px; }
+  .ap { display: block; color: #FCD9A0; font-size: 13px; }
+  .desc { display: block; color: #C7D3DF; }
+  .arrow { flex: none; width: 48px; display: flex; align-items: center; justify-content: center; }
+  .arrow svg { width: 40px; height: 8px; }
+  .eyebrow { margin-top: 48px; font-size: 13px; line-height: 16px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #9FB0C2; }
+  .guards { margin-top: 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 48px; }
+  .guard { height: 112px; padding: 12px 16px; display: flex; align-items: center; background: #16212E; border: 1px solid #263445; border-radius: 12px; }
+  .guard span { display: block; color: #C7D3DF; }
+  .guard .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; line-height: 18px; }
+  .legend { margin-top: auto; display: flex; align-items: center; gap: 12px; font-size: 14px; color: #9FB0C2; }
+  .chip { padding: 4px 12px; border-radius: 999px; font-weight: 600; }
+  .chip.g { background: #123A2E; color: #A7F3D0; }
+  .chip.a { background: #3A2C12; color: #FCD9A0; }
+</style>
+</head>
+<body>
+<div class="board">
+  <h1>How Breach Responder works</h1>
+  <p class="sub">One SKILL.md hands each stage to a registered NAS agent. Each stage passes only real, verified results to the next.</p>
+
+  <div class="flow" role="img" aria-label="Flow: You, then 1 Find files three ways (by name with file-agent, by content with knowledge-agent, by text in images with photo-agent), 2 Read documents with document-agent, 3 Read screenshots with photo-agent, 4 Approve and save with knowledge-agent, then the exposure report.">
+    <div class="card you"><span><b>You</b><span class="desc">A company name and the folders you authorize</span></span></div>
+    <div class="arrow" aria-hidden="true"><svg width="60" height="12" viewBox="0 0 60 12"><path d="M2 6 H52" stroke="#6B7F95" stroke-width="2" stroke-linecap="round"/><path d="M50 1 L58 6 L50 11 Z" fill="#6B7F95"/></svg></div>
+    <div class="band">
+      <span class="band-label">Breach Responder · SKILL.md — delegates every stage, runs nothing itself</span>
+      <div class="band-row">
+        <div class="card"><span><b>1 · Find, 3 ways</b><span class="agent" style="line-height:18px">file-agent<br>knowledge-agent<br>photo-agent</span><span class="cap">name · content · text in images</span><span class="ro">read-only</span></span></div>
+        <div class="arrow" aria-hidden="true"><svg width="60" height="12" viewBox="0 0 60 12"><path d="M2 6 H52" stroke="#6B7F95" stroke-width="2" stroke-linecap="round"/><path d="M50 1 L58 6 L50 11 Z" fill="#6B7F95"/></svg></div>
+        <div class="card"><span><b>2 · Read documents</b><span class="agent">document-agent</span><span class="cap">ug-document</span><span class="ro">read-only</span></span></div>
+        <div class="arrow" aria-hidden="true"><svg width="60" height="12" viewBox="0 0 60 12"><path d="M2 6 H52" stroke="#6B7F95" stroke-width="2" stroke-linecap="round"/><path d="M50 1 L58 6 L50 11 Z" fill="#6B7F95"/></svg></div>
+        <div class="card"><span><b>3 · Read screenshots</b><span class="agent">photo-agent</span><span class="cap">ug-photo</span><span class="ro">read-only</span></span></div>
+        <div class="arrow" aria-hidden="true"><svg width="60" height="12" viewBox="0 0 60 12"><path d="M2 6 H52" stroke="#6B7F95" stroke-width="2" stroke-linecap="round"/><path d="M50 1 L58 6 L50 11 Z" fill="#6B7F95"/></svg></div>
+        <div class="card approve"><span><b>4 · Approve + save</b><span class="agent">knowledge-agent</span><span class="cap">ug-knowledge</span><span class="ap">needs your approval</span></span></div>
+      </div>
+    </div>
+    <div class="arrow" aria-hidden="true"><svg width="60" height="12" viewBox="0 0 60 12"><path d="M2 6 H52" stroke="#6B7F95" stroke-width="2" stroke-linecap="round"/><path d="M50 1 L58 6 L50 11 Z" fill="#6B7F95"/></svg></div>
+    <div class="card out"><span><b>Exposure report</b><span class="desc" style="font-size:14px">Data types + source file, needs-review list, action checklist</span></span></div>
+  </div>
+
+  <div class="eyebrow">Guardrails on every stage</div>
+  <div class="guards">
+    <div class="guard"><div><b>Authorized folders only</b><span>Never widens the search or guesses a path</span></div></div>
+    <div class="guard"><div><b>Type + location, never the value</b><span>No card, ID or password values in any output</span></div></div>
+    <div class="guard"><div><b>Read-first</b><span>Only saving the report changes anything, and only after approval</span></div></div>
+    <div class="guard"><div><b>Honest results</b><span class="mono">completed · failed · cancelled · waiting_user · waiting_approval</span></div></div>
+  </div>
+
+  <div class="legend"><span class="chip g">Read-only</span><span class="chip a">Needs approval</span><span>Local only — no cloud, no uploads, no keys</span></div>
+</div>
+</body>
+</html>

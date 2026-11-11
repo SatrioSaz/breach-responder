@@ -1,0 +1,7 @@
+SAMPLE DATA - FICTIONAL - FOR TESTING ONLY
+
+Acme Insurance online account
+Website: acme-insurance.example
+Username: jordan.sample@example.com
+Password: Sample-NotReal-123
+Security question: first pet -> sample

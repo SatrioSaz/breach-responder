@@ -1,0 +1,51 @@
+1
+00:00:00,400 --> 00:00:05,133
+Meet Breach Responder: an AI Skill for UGREEN AI NAS.
+
+2
+00:00:05,733 --> 00:00:14,133
+So, you get an email: Acme Insurance has had a data breach. And your first thought is… wait, what did I actually give them?
+
+3
+00:00:14,733 --> 00:00:22,800
+Years of forms, invoices and screenshots are sitting on your NAS. Digging through all of that by hand? That takes hours.
+
+4
+00:00:23,400 --> 00:00:36,667
+Breach Responder answers using only the files on your NAS. Nothing leaves the device — you’d never upload your passport scans to a cloud AI just to check.
+
+5
+00:00:37,267 --> 00:00:44,567
+You just type the company name, any other names you know it by, and the folders it’s allowed to search. That’s it.
+
+6
+00:00:45,167 --> 00:00:54,633
+First, it searches three ways at once: by file name, by what’s written inside your documents, and by the text in your photos and screenshots.
+
+7
+00:00:55,233 --> 00:01:05,867
+So it catches files like INV-554.pdf and scan_004.jpg — not just the ones with “Acme” in the name.
+
+8
+00:01:06,467 --> 00:01:14,367
+Next, it reads each file and lists which types of personal data show up, each with its source file and a confidence level.
+
+9
+00:01:14,967 --> 00:01:23,433
+And it never shows the actual card or passport number. Not even the last four digits. Just the type of data, and where it lives.
+
+10
+00:01:24,033 --> 00:01:34,767
+Anything unclear or unreadable goes into a “needs a human look” list instead of being guessed. If nothing matches, it simply says so.
+
+11
+00:01:35,367 --> 00:01:41,600
+Then you get a checklist, highest risk first, with every item tied to the file behind it.
+
+12
+00:01:42,200 --> 00:01:49,733
+The report is only saved to your NAS after you approve it. Nothing gets moved, and nothing gets deleted.
+
+13
+00:01:50,333 --> 00:01:55,300
+Breach Responder. Your data, your answer, on your NAS.

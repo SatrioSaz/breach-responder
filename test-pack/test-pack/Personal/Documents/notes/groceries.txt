@@ -1,0 +1,4 @@
+eggs
+milk
+rice
+coffee

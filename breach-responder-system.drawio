@@ -1,0 +1,163 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.0.0">
+  <diagram id="breach-responder-system" name="Breach Responder system">
+    <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title and legend -->
+        <mxCell id="title" value="Breach Responder — system architecture" style="text;html=1;fontSize=26;fontStyle=1;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="200" y="10" width="700" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lg1" value="read-only" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="17" width="110" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="lg2" value="needs approval" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="17" width="130" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="lg3" value="stop / no result" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="17" width="130" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Containers (behind everything) -->
+        <mxCell id="nas" value="UGREEN AI NAS — everything runs locally (no cloud, no uploads, no keys)" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;dashed=1;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="200" y="70" width="1380" height="980" as="geometry" />
+        </mxCell>
+        <mxCell id="skill" value="Breach Responder Skill — SKILL.md orchestrates with &lt;i&gt;delegate&lt;/i&gt;; registered experts do the NAS work" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fillColor=#ffffff;strokeColor=#6c8ebf;strokeWidth=2;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="440" y="120" width="1110" height="760" as="geometry" />
+        </mxCell>
+        <mxCell id="grp1" value="Step 1 · Find linked files&lt;br&gt;&lt;span style=&quot;font-weight:normal&quot;&gt;read-only · 3 independent searches&lt;/span&gt;" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;verticalAlign=top;align=center;spacingTop=6;fillColor=#f0f7ec;strokeColor=#82b366;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="690" y="160" width="360" height="350" as="geometry" />
+        </mxCell>
+        <mxCell id="grp23" value="Steps 2–3 · Classify personal data&lt;br&gt;&lt;span style=&quot;font-weight:normal&quot;&gt;read-only · max 20 files per batch&lt;/span&gt;" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;verticalAlign=top;align=center;spacingTop=6;fillColor=#f0f7ec;strokeColor=#82b366;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="560" width="420" height="220" as="geometry" />
+        </mxCell>
+
+        <!-- Outside the NAS -->
+        <mxCell id="user" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="290" width="40" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Inside the NAS, outside the Skill -->
+        <mxCell id="uliya" value="&lt;b&gt;Uliya AI assistant&lt;/b&gt;&lt;br&gt;runs installed Skills&lt;br&gt;on the NAS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="290" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="storage" value="&lt;b&gt;NAS storage&lt;/b&gt;&lt;br&gt;authorized folders only" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="600" width="170" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Skill workflow: top row -->
+        <mxCell id="input" value="&lt;b&gt;Input&lt;/b&gt;&lt;br&gt;• Company + other names&lt;br&gt;• Authorized folders&lt;br&gt;• Time range (optional)" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=12;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="470" y="275" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="s1a" value="&lt;b&gt;1a · By file or folder name&lt;/b&gt;&lt;br&gt;file-agent · ug-filesystem" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="710" y="215" width="320" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s1b" value="&lt;b&gt;1b · By document content&lt;/b&gt;&lt;br&gt;knowledge-agent · ug-knowledge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="710" y="315" width="320" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s1c" value="&lt;b&gt;1c · By text in photos and screenshots&lt;/b&gt;&lt;br&gt;photo-agent · ug-photo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="710" y="415" width="320" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="merge" value="&lt;b&gt;Merge + de-duplicate&lt;/b&gt;&lt;br&gt;evidence list,&lt;br&gt;with how each file&lt;br&gt;was found" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="280" width="170" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="anyfiles" value="Any linked&lt;br&gt;files?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="285" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stop" value="&lt;b&gt;Say “no files found”&lt;br&gt;and stop&lt;/b&gt;&lt;br&gt;never widen the scope" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="160" width="180" height="76" as="geometry" />
+        </mxCell>
+
+        <!-- Skill workflow: bottom row (right to left) -->
+        <mxCell id="s2" value="&lt;b&gt;2 · Documents&lt;/b&gt;&lt;br&gt;document-agent&lt;br&gt;ug-document&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;data type + file + confidence&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="620" width="185" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="&lt;b&gt;3 · Photos and screenshots&lt;/b&gt;&lt;br&gt;photo-agent&lt;br&gt;ug-photo&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;data type + file + confidence&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="620" width="185" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" value="&lt;b&gt;4 · Build report in chat&lt;/b&gt;&lt;br&gt;• exposure list&lt;br&gt;• needs-human-review list&lt;br&gt;• risk-ordered checklist" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=12;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="860" y="620" width="190" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="approve" value="User approves&lt;br&gt;the save?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="670" y="630" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" value="&lt;b&gt;5 · Save report&lt;br&gt;as a new file&lt;/b&gt;&lt;br&gt;knowledge-agent&lt;br&gt;ug-knowledge&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;never overwrites&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="470" y="620" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="decline" value="&lt;b&gt;Keep report in chat&lt;/b&gt;&lt;br&gt;save nothing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="655" y="790" width="180" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Guardrails -->
+        <mxCell id="guard" value="&lt;b&gt;Guardrails on every step&lt;/b&gt;&lt;br&gt;• &lt;b&gt;Authorized folders only&lt;/b&gt; — never guesses a path or widens the search&lt;br&gt;• &lt;b&gt;Type + location, never the value&lt;/b&gt; — no card, ID, account numbers or passwords, not even the last digits&lt;br&gt;• &lt;b&gt;Read-first&lt;/b&gt; — steps 1–4 change nothing; the only change is saving the report, after approval&lt;br&gt;• &lt;b&gt;Honest results&lt;/b&gt; — completed · failed · cancelled · waiting_user · waiting_approval; empty results are valid answers; nothing is invented" style="shape=note;whiteSpace=wrap;html=1;size=16;align=left;verticalAlign=middle;spacingLeft=14;spacingRight=20;fillColor=#fffde7;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="440" y="910" width="1110" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Edges: top row (all straight, centres aligned at y=335) -->
+        <mxCell id="e1" value="question" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="user" target="uliya">
+          <mxGeometry x="-0.15" relative="1" as="geometry">
+            <mxPoint as="offset" y="-10" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="uliya" target="user">
+          <mxGeometry x="0.15" relative="1" as="geometry">
+            <mxPoint as="offset" y="10" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="uliya" target="input">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="input" target="grp1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="grp1" target="merge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="merge" target="anyfiles">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=12;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="anyfiles" target="stop">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.738;entryY=0;entryDx=0;entryDy=0;fontSize=12;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="anyfiles" target="grp23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Edges: bottom row (centres aligned at y=680) -->
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=0;exitY=0.545;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="grp23" target="s4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="s4" target="approve">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="approve" target="s5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" y="-12" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;fontStyle=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="approve" target="decline">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Edges: storage (dashed) -->
+        <mxCell id="e13" value="writes one new file" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#9673a6;fontColor=#5b3a73;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="s5" target="storage">
+          <mxGeometry x="0.33" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="800" />
+              <mxPoint x="315" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" value="steps 1–3 read (read-only)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#9673a6;fontColor=#5b3a73;exitX=0.1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=11;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="grp1" target="storage">
+          <mxGeometry x="-0.34" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="726" y="550" />
+              <mxPoint x="315" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

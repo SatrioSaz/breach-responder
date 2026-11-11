@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Breach Responder walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #0F1720; --panel: #16212E; --panel-2: #1E2B3A; --line: #263445; --line-2: #3A4B5E;
+    --text: #E6EDF3; --text-2: #C7D3DF; --muted: #9FB0C2;
+    --green: #34D399; --green-bg: #123A2E; --green-text: #A7F3D0; --green-ink: #06291D;
+    --amber: #F5B65A; --amber-bg: #3A2C12; --amber-text: #FCD9A0; --amber-ink: #2A1C04;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #0B121A; font-family: Inter, system-ui, sans-serif; color: var(--text); }
+  .stage { width: 1280px; height: 720px; padding: 28px 40px; display: flex; flex-direction: column; gap: 16px; background: var(--ground); font-size: 15px; line-height: 1.45; }
+  header { display: flex; align-items: center; justify-content: space-between; height: 44px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo { width: 40px; height: 40px; border-radius: 10px; background: var(--green-bg); display: flex; align-items: center; justify-content: center; }
+  .brand b { display: block; font-size: 20px; letter-spacing: -0.01em; }
+  .brand small { font-size: 13px; color: var(--muted); }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--green-bg); color: var(--green-text); font-size: 13px; font-weight: 500; }
+  nav { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; height: 44px; }
+  .step { display: flex; align-items: center; gap: 10px; padding: 0 14px; border-radius: 10px; font-size: 14px; background: var(--panel); border: 1px solid var(--line); color: var(--muted); }
+  .step .n { width: 24px; height: 24px; border-radius: 999px; border: 1px solid var(--line-2); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+  .step.active { background: var(--green); border-color: var(--green); color: var(--green-ink); font-weight: 600; }
+  .step.active .n { background: var(--green-ink); color: var(--green); border: 0; }
+  .step.done { border-color: #2B4A3E; color: var(--green-text); }
+  main { flex: 1 1 auto; min-height: 0; padding: 24px 28px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); overflow: hidden; }
+  footer { display: flex; align-items: center; justify-content: space-between; height: 48px; }
+  footer .note { font-size: 13px; color: var(--muted); }
+  .btns { display: flex; gap: 10px; }
+  button { font-family: inherit; cursor: pointer; }
+  .btn { height: 44px; padding: 0 22px; border-radius: 10px; font-size: 15px; font-weight: 600; }
+  .btn-primary { border: 0; background: var(--green); color: var(--green-ink); font-weight: 700; }
+  .btn-ghost { border: 1px solid var(--line-2); background: transparent; color: var(--text); }
+  .btn-amber { border: 0; background: var(--amber); color: var(--amber-ink); font-weight: 700; }
+  button:focus-visible, input:focus { outline: 2px solid var(--green); outline-offset: 2px; }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .h { font-size: 22px; font-weight: 700; }
+  .muted { color: var(--muted); }
+  .mono { font-family: var(--mono); }
+  .chip { padding: 6px 12px; border-radius: 999px; background: var(--ground); border: 1px solid var(--line-2); font-family: var(--mono); font-size: 13px; }
+  .chip.green { background: var(--green-bg); border: 0; color: var(--green-text); font-family: inherit; font-weight: 500; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .col { display: flex; flex-direction: column; }
+  .stack { display: flex; flex-direction: column; height: 100%; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; height: 100%; }
+  .card { padding: 18px 20px; border-radius: 14px; background: var(--panel-2); border: 1px solid #2E3F52; }
+  .bubble { align-self: flex-end; max-width: 88%; padding: 16px 18px; border-radius: 14px 14px 4px 14px; background: var(--green-bg); border: 1px solid #1F5C47; }
+  form { display: flex; flex-direction: column; gap: 10px; padding: 20px; border-radius: 14px; background: var(--ground); border: 1px solid var(--line); }
+  label { font-size: 13px; color: var(--text-2); margin-top: 4px; }
+  input { height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text); font-size: 15px; font-family: inherit; }
+  input.mono { font-family: var(--mono); font-size: 14px; }
+  .table { display: grid; grid-template-columns: minmax(0, 1fr) 110px 170px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 14px; }
+  .table > div { padding: 9px 16px; border-top: 1px solid var(--line); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .table > .th { border-top: 0; background: var(--ground); color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .table > .path { font-family: var(--mono); font-size: 13px; color: var(--text); }
+  .notice { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 10px; background: var(--panel-2); font-size: 14px; color: var(--text-2); }
+  .list { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .exp { display: grid; grid-template-columns: 220px minmax(0, 1fr) 96px; align-items: center; gap: 16px; padding: 8px 16px; border-bottom: 1px solid var(--line); }
+  .exp:last-child { border-bottom: 0; }
+  .exp .files { font-family: var(--mono); font-size: 13px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conf { justify-self: end; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .conf.high { background: var(--green-bg); color: var(--green-text); }
+  .conf.medium { background: var(--amber-bg); color: var(--amber-text); }
+  .review { display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; border-radius: 12px; background: var(--ground); border: 1px solid #4A3A1E; }
+  .tag { margin-left: auto; flex: none; padding: 3px 10px; border-radius: 999px; background: #2A3442; color: var(--text-2); font-size: 12px; font-weight: 600; }
+  .action { display: flex; gap: 14px; padding: 10px 14px; border-radius: 12px; background: var(--ground); border: 1px solid var(--line); }
+  .action .num { flex: none; width: 28px; height: 28px; border-radius: 999px; background: var(--panel-2); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+  .action .why { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .approval { display: flex; flex-direction: column; gap: 14px; padding: 22px; border-radius: 14px; background: var(--ground); border: 2px solid var(--amber); }
+  .path-box { padding: 10px 12px; border-radius: 8px; background: var(--panel); font-family: var(--mono); font-size: 12px; overflow-wrap: anywhere; }
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; width: 760px; }
+  .stat { padding: 14px; border-radius: 12px; background: var(--ground); border: 1px solid var(--line); display: flex; flex-direction: column; }
+  .stat b { font-size: 30px; }
+  .stat span { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <header>
+    <div class="brand">
+      <div class="logo"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div><b>Breach Responder</b><small>An AI Skill that runs on your AI NAS</small></div>
+    </div>
+    <span class="pill"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Local only · nothing leaves your NAS</span>
+  </header>
+  <nav id="steps" aria-label="Progress"></nav>
+  <main id="screen"></main>
+  <footer>
+    <span class="note">Prototype walkthrough · sample data · not a recording of a real NAS run</span>
+    <div class="btns" id="btns"></div>
+  </footer>
+</div>
+
+<script>
+  const state = { step: 0, declined: false, company: 'Acme Insurance', aliases: 'Acme Insurance Ltd., AcmeCare', folders: '/Personal/Documents, /Personal/Screenshots' };
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const icon = {
+    check: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>',
+    mail: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5B65A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+    eyeOff: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><path d="M4 4l16 16"/></svg>',
+    warn: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5B65A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><path d="M12 3l9 16H3l9-16z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg>',
+    info: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9FB0C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>',
+    shield: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5B65A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg>',
+    bigCheck: '<svg aria-hidden="true" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>'
+  };
+
+  function data() {
+    const company = state.company || 'the company';
+    const slug = company.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'company';
+    const short = slug.split('-')[0] || slug;
+    const d = '/Personal/Documents/', s = '/Personal/Screenshots/';
+    return {
+      company, slug, short,
+      reportPath: '/Personal/Reports/' + slug + '-breach-report.md',
+      files: [
+        [d + 'insurance/' + short + '-policy-2022.pdf', 'PDF', 'File name'],
+        [d + 'insurance/INV-554.pdf', 'PDF', 'Document content'],
+        [d + 'insurance/' + short + '-old-statement.pdf', 'PDF', 'File name'],
+        [d + 'forms/claim-form-signed.pdf', 'PDF', 'Document content'],
+        [d + 'scans/scan_004.jpg', 'Image', 'Text in image'],
+        [d + 'notes/' + short + '-account.txt', 'Text', 'File name'],
+        [s + 'Screenshot 2022-03-14 at 10.21.png', 'Screenshot', 'Text in image'],
+        [s + short + '/IMG_2291.jpg', 'Photo', 'Folder name']
+      ],
+      exposures: [
+        ['Payment-card details', 'INV-554.pdf', 'High'],
+        ['Login credentials', short + '-account.txt', 'High'],
+        ['Passport or national ID', 'scan_004.jpg, claim-form-signed.pdf', 'High'],
+        ['Date of birth', 'claim-form-signed.pdf', 'High'],
+        ['Home address', short + '-policy-2022.pdf, claim-form-signed.pdf', 'High'],
+        ['Phone number', 'claim-form-signed.pdf', 'Medium'],
+        ['Email address', 'Screenshot 2022-03-14 at 10.21.png', 'Medium']
+      ],
+      reviews: [
+        [s + short + '/IMG_2291.jpg', 'Text too blurry to read with confidence. Looks like a payment screen.', 'Low confidence'],
+        [d + 'insurance/' + short + '-old-statement.pdf', 'Password-protected, so it could not be read.', 'Unreadable']
+      ],
+      actions: [
+        ['Change your ' + company + ' password and any reused ones; turn on 2FA', 'Login credentials · ' + short + '-account.txt'],
+        ['Watch your card statement and set transaction alerts', 'Payment-card details · INV-554.pdf'],
+        ['Note the ID exposure; check the issuer’s watch or replacement process', 'Passport or national ID · scan_004.jpg'],
+        ['Be alert to identity fraud using your birth date and address', 'Date of birth, Home address · claim-form-signed.pdf'],
+        ['Expect phishing emails and scam calls that mention ' + company, 'Email, Phone · Screenshot 2022-03-14 at 10.21.png']
+      ]
+    };
+  }
+
+  const screens = [
+    // 0 · Ask
+    (v) => `
+      <div class="grid2">
+        <div class="col" style="gap:16px">
+          <span class="eyebrow">The moment it starts</span>
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:8px">${icon.mail}<span>Email · Security notice</span></div>
+            <p style="margin:0;font-size:17px;font-weight:600">“We recently detected unauthorized access to customer data.”</p>
+            <p style="margin:6px 0 0" class="muted">— <span data-bind="company">${esc(v.company)}</span></p>
+          </div>
+          <div class="bubble">
+            <span style="display:block;font-size:12px;color:var(--green-text);margin-bottom:4px">You</span>
+            <span style="font-size:16px"><span data-bind="company">${esc(v.company)}</span> had a data breach. What did I ever give them, and what should I do now?</span>
+          </div>
+          <p style="margin:auto 0 0;font-size:14px" class="muted">Years of forms, invoices and screenshots are on the NAS. Checking by hand takes hours. Breach Responder answers in one run.</p>
+        </div>
+        <form id="start-form">
+          <span class="eyebrow">Start a breach check</span>
+          <label for="br-company">Company name</label>
+          <input id="br-company" type="text" value="${esc(state.company)}" style="font-size:16px">
+          <label for="br-aliases">Other names you know (optional)</label>
+          <input id="br-aliases" type="text" value="${esc(state.aliases)}">
+          <label for="br-folders">Folders you authorize for this run</label>
+          <input id="br-folders" class="mono" type="text" value="${esc(state.folders)}">
+          <span style="font-size:13px" class="muted">It only looks inside these folders. It never widens the search on its own.</span>
+          <button type="submit" class="btn btn-primary" style="margin-top:auto;height:48px;font-size:16px">Start breach check</button>
+        </form>
+      </div>`,
+    // 1 · Find
+    (v) => `
+      <div class="stack" style="gap:14px">
+        <div class="row">
+          <div class="col"><span class="eyebrow">Stage 1 · Find files three ways</span><span class="h">Found 8 files linked to ${esc(v.company)}</span></div>
+          <div style="display:flex;gap:8px"><span class="chip">file-agent</span><span class="chip">knowledge-agent</span><span class="chip">photo-agent</span><span class="chip green">Read-only</span></div>
+        </div>
+        <div class="table">
+          <div class="th">File</div><div class="th">Type</div><div class="th">Found by</div>
+          ${v.files.map(([p, t, f]) => `<div class="path">${esc(p)}</div><div>${t}</div><div>${f === 'File name' || f === 'Folder name' ? f : `<span style="color:var(--green-text);font-weight:600">${f}</span>`}</div>`).join('')}
+        </div>
+        <span style="font-size:13px" class="muted">Searched file names, document content and the text in images, only inside the authorized folders. Nothing was moved, renamed, tagged or deleted.</span>
+      </div>`,
+    // 2 · Classify
+    (v) => `
+      <div class="stack" style="gap:12px">
+        <div class="row">
+          <div class="col"><span class="eyebrow">Stages 2 + 3 · Read documents and screenshots</span><span class="h">7 types of your personal data found in 6 files</span></div>
+          <div style="display:flex;gap:8px"><span class="chip">document-agent</span><span class="chip">photo-agent</span></div>
+        </div>
+        <div class="notice">${icon.eyeOff}<span>Values are never shown or saved — only the <b>type</b> of data and the <b>file</b> it is in.</span></div>
+        <div class="list">
+          ${v.exposures.map(([c, f, conf]) => `<div class="exp"><span style="font-weight:600">${c}</span><span class="files">${esc(f)}</span><span class="conf ${conf.toLowerCase()}">${conf}</span></div>`).join('')}
+        </div>
+      </div>`,
+    // 3 · Review
+    (v) => `
+      <div class="stack" style="gap:16px">
+        <div class="col">
+          <span class="eyebrow">Honest results</span>
+          <span class="h">2 files need a human look</span>
+          <span class="muted">Unclear or unreadable files go here instead of being guessed. They are not counted as confirmed exposure.</span>
+        </div>
+        ${v.reviews.map(([p, r, l]) => `<div class="review">${icon.warn}<div class="col" style="gap:4px;min-width:0"><span class="mono" style="font-size:14px">${esc(p)}</span><span style="color:var(--text-2)">${r}</span></div><span class="tag">${l}</span></div>`).join('')}
+        <div style="margin-top:auto;display:flex;align-items:center;gap:10px;font-size:14px" class="muted">${icon.info}<span>If nothing matched at all, Breach Responder would say so plainly — it never invents files or findings.</span></div>
+      </div>`,
+    // 4 · Save (approval)
+    (v) => `
+      <div style="display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:24px;height:100%">
+        <div class="col" style="gap:10px;min-width:0">
+          <span class="eyebrow">What to do now · highest risk first</span>
+          ${v.actions.map(([a, w], i) => `<div class="action"><span class="num">${i + 1}</span><div class="col" style="min-width:0"><span style="font-weight:600">${esc(a)}</span><span class="why">${esc(w)}</span></div></div>`).join('')}
+        </div>
+        <div class="approval">
+          <div style="display:flex;align-items:center;gap:10px">${icon.shield}<span style="font-size:18px;font-weight:700">Approval needed</span></div>
+          <span style="color:var(--text-2)">Save this report as a new file on your NAS?</span>
+          <span class="path-box">${esc(v.reportPath)}</span>
+          <span style="font-size:14px" class="muted">Contains 8 files, 7 data types, 2 review items and 5 actions. No raw card, ID or password values. Never overwrites an existing file.</span>
+          <span class="mono muted" style="font-size:12px">knowledge-agent · ug-knowledge</span>
+          ${state.declined ? '<span style="padding:10px 12px;border-radius:8px;background:#2A3442;font-size:14px">Declined — nothing was saved. The report stays on screen only.</span>' : ''}
+          <div style="margin-top:auto;display:flex;gap:10px">
+            <button type="button" class="btn btn-ghost" style="flex:1" data-action="decline">Decline</button>
+            <button type="button" class="btn btn-amber" style="flex:2" data-action="approve">Approve and save</button>
+          </div>
+        </div>
+      </div>`,
+    // 5 · Done
+    (v) => `
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;height:100%;text-align:center">
+        <div style="width:72px;height:72px;border-radius:999px;background:var(--green-bg);display:flex;align-items:center;justify-content:center">${icon.bigCheck}</div>
+        <span style="font-size:28px;font-weight:700">Report saved on your NAS</span>
+        <span class="path-box" style="padding:10px 16px;border:1px solid var(--line);background:var(--ground);font-size:14px">${esc(v.reportPath)}</span>
+        <div class="stats">
+          <div class="stat"><b>8</b><span>files found</span></div>
+          <div class="stat"><b>7</b><span>data types exposed</span></div>
+          <div class="stat"><b>2</b><span>need a human look</span></div>
+          <div class="stat"><b>5</b><span>actions to take</span></div>
+        </div>
+        <span class="muted">Nothing was moved, renamed, tagged or deleted. All analysis ran on the NAS.</span>
+        <span style="font-size:20px;font-weight:600;color:var(--green-text);margin-top:4px">Your data, your answer, on your NAS.</span>
+      </div>`
+  ];
+
+  const nextLabels = ['Start breach check', 'Read the files', 'Show items to review', 'Build checklist'];
+  const stepLabels = ['Ask', 'Find', 'Classify', 'Review', 'Save'];
+
+  function go(n) { state.step = n; state.declined = false; render(); }
+
+  function render() {
+    const v = data();
+    const step = state.step;
+    const cur = Math.min(step, 4);
+
+    document.getElementById('steps').innerHTML = stepLabels.map((label, i) => {
+      const done = i < cur || step === 5;
+      const active = i === cur && step !== 5;
+      const cls = active ? 'active' : done ? 'done' : '';
+      const mark = done && !active ? icon.check : `<span class="n">${i + 1}</span>`;
+      return `<div class="step ${cls}" ${active ? 'aria-current="step"' : ''}>${mark}<span>${label}</span></div>`;
+    }).join('');
+
+    document.getElementById('screen').innerHTML = screens[step](v);
+
+    let btns = '';
+    if (step > 0 && step < 5) btns += '<button type="button" class="btn btn-ghost" data-action="back">Back</button>';
+    if (step < 4) btns += `<button type="button" class="btn btn-primary" data-action="next">${nextLabels[step]}</button>`;
+    if (step === 5) btns += '<button type="button" class="btn btn-ghost" data-action="restart">Start over</button>';
+    document.getElementById('btns').innerHTML = btns;
+
+    if (step === 0) {
+      const bind = (id, key) => document.getElementById(id).addEventListener('input', (e) => {
+        state[key] = e.target.value;
+        if (key === 'company') document.querySelectorAll('[data-bind="company"]').forEach((el) => { el.textContent = e.target.value; });
+      });
+      bind('br-company', 'company'); bind('br-aliases', 'aliases'); bind('br-folders', 'folders');
+      document.getElementById('start-form').addEventListener('submit', (e) => { e.preventDefault(); go(1); });
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const a = btn.dataset.action;
+    if (a === 'next') go(Math.min(state.step + 1, 5));
+    if (a === 'back') go(Math.max(state.step - 1, 0));
+    if (a === 'approve') go(5);
+    if (a === 'decline') { state.declined = true; render(); }
+    if (a === 'restart') go(0);
+  });
+
+  // Keyboard shortcuts for recording: Right arrow = next, Left arrow = back (ignored while typing in a field)
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' && state.step < 4) go(state.step + 1);
+    if (e.key === 'ArrowLeft' && state.step > 0 && state.step < 5) go(state.step - 1);
+  });
+
+  render();
+</script>
+</body>
+</html>
