@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Inter, system-ui, sans-serif">
+  <!-- backdrop -->
+  <rect width="1280" height="720" fill="#0B121A"/>
+  <!-- stage -->
+  <rect width="1280" height="720" fill="#0F1720"/>
+
+  <!-- ===== HEADER ===== -->
+  <g transform="translate(40,28)">
+    <!-- brand logo -->
+    <rect width="40" height="40" rx="10" fill="#123A2E"/>
+    <g transform="translate(9,9)" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 1l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V4l8-3z"/>
+      <path d="M8 11l2 2 4-4"/>
+    </g>
+    <text x="52" y="18" fill="#E6EDF3" font-size="20" font-weight="700">Breach Responder</text>
+    <text x="52" y="36" fill="#9FB0C2" font-size="13">An AI Skill that runs on your AI NAS</text>
+
+    <!-- local-only pill -->
+    <g transform="translate(905,6)">
+      <rect width="295" height="30" rx="15" fill="#123A2E"/>
+      <g transform="translate(16,7)" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="0" y="6" width="14" height="10" rx="2"/>
+        <path d="M3 6V3a4 4 0 0 1 8 0v3"/>
+      </g>
+      <text x="40" y="20" fill="#A7F3D0" font-size="13" font-weight="500">Local only · nothing leaves your NAS</text>
+    </g>
+  </g>
+
+  <!-- ===== STEP NAV ===== -->
+  <g transform="translate(40,88)">
+    <!-- cell width 232, gap 8 -->
+    <!-- Ask (active) -->
+    <g transform="translate(0,0)">
+      <rect width="232" height="44" rx="10" fill="#34D399"/>
+      <circle cx="26" cy="22" r="12" fill="#06291D"/>
+      <text x="26" y="26" fill="#34D399" font-size="12" font-weight="700" text-anchor="middle">1</text>
+      <text x="48" y="27" fill="#06291D" font-size="14" font-weight="600">Ask</text>
+    </g>
+    <!-- Find -->
+    <g transform="translate(240,0)">
+      <rect width="232" height="44" rx="10" fill="#16212E" stroke="#263445"/>
+      <circle cx="26" cy="22" r="12" fill="none" stroke="#3A4B5E"/>
+      <text x="26" y="26" fill="#9FB0C2" font-size="12" text-anchor="middle">2</text>
+      <text x="48" y="27" fill="#9FB0C2" font-size="14">Find</text>
+    </g>
+    <!-- Classify -->
+    <g transform="translate(480,0)">
+      <rect width="232" height="44" rx="10" fill="#16212E" stroke="#263445"/>
+      <circle cx="26" cy="22" r="12" fill="none" stroke="#3A4B5E"/>
+      <text x="26" y="26" fill="#9FB0C2" font-size="12" text-anchor="middle">3</text>
+      <text x="48" y="27" fill="#9FB0C2" font-size="14">Classify</text>
+    </g>
+    <!-- Review -->
+    <g transform="translate(720,0)">
+      <rect width="232" height="44" rx="10" fill="#16212E" stroke="#263445"/>
+      <circle cx="26" cy="22" r="12" fill="none" stroke="#3A4B5E"/>
+      <text x="26" y="26" fill="#9FB0C2" font-size="12" text-anchor="middle">4</text>
+      <text x="48" y="27" fill="#9FB0C2" font-size="14">Review</text>
+    </g>
+    <!-- Save -->
+    <g transform="translate(960,0)">
+      <rect width="232" height="44" rx="10" fill="#16212E" stroke="#263445"/>
+      <circle cx="26" cy="22" r="12" fill="none" stroke="#3A4B5E"/>
+      <text x="26" y="26" fill="#9FB0C2" font-size="12" text-anchor="middle">5</text>
+      <text x="48" y="27" fill="#9FB0C2" font-size="14">Save</text>
+    </g>
+  </g>
+
+  <!-- ===== MAIN PANEL ===== -->
+  <g transform="translate(40,148)">
+    <rect width="1200" height="488" rx="16" fill="#16212E" stroke="#263445"/>
+
+    <!-- LEFT column : the trigger -->
+    <g transform="translate(28,24)">
+      <text x="0" y="12" fill="#9FB0C2" font-size="13" font-weight="600" letter-spacing="1.04">THE MOMENT IT STARTS</text>
+
+      <!-- email card -->
+      <g transform="translate(0,28)">
+        <rect width="556" height="118" rx="14" fill="#1E2B3A" stroke="#2E3F52"/>
+        <g transform="translate(20,18)" fill="none" stroke="#F5B65A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="0" y="2" width="18" height="14" rx="2"/>
+          <path d="M0 4l9 6 9-6"/>
+        </g>
+        <text x="46" y="31" fill="#9FB0C2" font-size="13">Email · Security notice</text>
+        <text x="20" y="62" fill="#E6EDF3" font-size="17" font-weight="600">“We recently detected unauthorized access</text>
+        <text x="20" y="84" fill="#E6EDF3" font-size="17" font-weight="600">to customer data.”</text>
+        <text x="20" y="106" fill="#9FB0C2" font-size="14">— Acme Insurance</text>
+      </g>
+
+      <!-- user bubble -->
+      <g transform="translate(96,166)">
+        <rect width="460" height="92" rx="14" fill="#123A2E" stroke="#1F5C47"/>
+        <text x="20" y="26" fill="#A7F3D0" font-size="12">You</text>
+        <text x="20" y="52" fill="#E6EDF3" font-size="16">Acme Insurance had a data breach. What did I</text>
+        <text x="20" y="74" fill="#E6EDF3" font-size="16">ever give them, and what should I do now?</text>
+      </g>
+
+      <text x="0" y="300" fill="#9FB0C2" font-size="14">Years of forms, invoices and screenshots are on the NAS.</text>
+      <text x="0" y="320" fill="#9FB0C2" font-size="14">Checking by hand takes hours. Breach Responder answers in one run.</text>
+    </g>
+
+    <!-- divider -->
+    <line x1="612" y1="24" x2="612" y2="464" stroke="#263445"/>
+
+    <!-- RIGHT column : form -->
+    <g transform="translate(640,24)">
+      <rect width="532" height="440" rx="14" fill="#0F1720" stroke="#263445"/>
+      <g transform="translate(20,20)">
+        <text x="0" y="12" fill="#9FB0C2" font-size="13" font-weight="600" letter-spacing="1.04">START A BREACH CHECK</text>
+
+        <text x="0" y="44" fill="#C7D3DF" font-size="13">Company name</text>
+        <rect x="0" y="52" width="492" height="44" rx="10" fill="#16212E" stroke="#3A4B5E"/>
+        <text x="14" y="80" fill="#E6EDF3" font-size="16">Acme Insurance</text>
+
+        <text x="0" y="124" fill="#C7D3DF" font-size="13">Other names you know (optional)</text>
+        <rect x="0" y="132" width="492" height="44" rx="10" fill="#16212E" stroke="#3A4B5E"/>
+        <text x="14" y="160" fill="#E6EDF3" font-size="15">Acme Insurance Ltd., AcmeCare</text>
+
+        <text x="0" y="204" fill="#C7D3DF" font-size="13">Folders you authorize for this run</text>
+        <rect x="0" y="212" width="492" height="44" rx="10" fill="#16212E" stroke="#3A4B5E"/>
+        <text x="14" y="240" fill="#E6EDF3" font-size="14" font-family="'JetBrains Mono', ui-monospace, monospace">/Personal/Documents, /Personal/Screenshots</text>
+
+        <text x="0" y="280" fill="#9FB0C2" font-size="13">It only looks inside these folders. It never widens</text>
+        <text x="0" y="298" fill="#9FB0C2" font-size="13">the search on its own.</text>
+
+        <!-- CTA -->
+        <rect x="0" y="328" width="492" height="48" rx="10" fill="#34D399"/>
+        <text x="246" y="357" fill="#06291D" font-size="16" font-weight="700" text-anchor="middle">Start breach check</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ===== FOOTER ===== -->
+  <g transform="translate(40,672)">
+    <text x="0" y="20" fill="#9FB0C2" font-size="13">Prototype walkthrough · sample data · not a recording of a real NAS run</text>
+  </g>
+</svg>

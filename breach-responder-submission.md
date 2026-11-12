@@ -2,7 +2,7 @@
 
 **Skill name:** `breach-responder`
 **Track:** 04 Open Innovation
-**Package:** `breach-responder.zip` (contains `breach-responder/SKILL.md` and four linked files in `breach-responder/references/`)
+**Package:** `breach-responder-1.0.0.zip` (contains `breach-responder/SKILL.md` and four linked files in `breach-responder/references/`)
 **Static checker:** the official `uliya-skill-kit` checker reports `static-pass` with 0 errors and 0 warnings.
 
 ---

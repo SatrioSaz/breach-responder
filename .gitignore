@@ -6,6 +6,6 @@ desktop.ini
 *~
 
 # Build artifacts
-breach-responder.zip
+breach-responder*.zip
 *.tmp
 *.log
