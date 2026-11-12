@@ -12,13 +12,14 @@ These rules bind every delegation. They keep the workflow local, read-first and 
 
 - Steps 1 to 4 are read-only. They never move, rename, copy, tag or delete anything.
 - The only change is saving the report as a new file in step 5. Show the user what will be written and where, and save only after explicit approval.
-- Never overwrite an existing file. If the name exists, report it and wait for a new name.
+- Never overwrite an existing file. The save action has no "do not overwrite" option, so check that the name is free (step 5a, read-only) before saving. If the name exists, report it and wait for a new name.
 - If the user declines, keep the report in chat and save nothing.
 
 ## Never the value
 
 - Report personal data by category and source file only, as defined in [pii-taxonomy.md](pii-taxonomy.md).
 - Never quote, return, display or save a card number, security code, bank account number, passport or national ID number, password or security answer, in full or in part. This applies to chat messages and to the saved report.
+- Experts that read raw text (document reading, text recognition in images) may return a value even when told not to. Treat every expert result as possibly containing values: check it before use (step 4), remove any value, keep only its category and source file, and note the file under needs human review.
 
 ## Honest results
 

@@ -64,9 +64,12 @@ breach-responder-skill/
       pii-taxonomy.md         # PII categories, confidence levels, never-the-value rule
       privacy-and-safety.md   # Scope, read-only, approval, local-only rules
       report-layout.md        # Report structure shown in chat and saved
-test-pack/
+test-pack/test-pack/
   TEST-PLAN.md                # Finals test plan (T1–T8) with pass criteria
   Personal/                   # Fictional sample data (Documents + Screenshots)
+design/
+  DESIGN.md                   # UI tokens and component specs
+  screen-*.svg                # 1280×720 artboards
 visuals/
   breach-responder-diagram.html
   breach-responder-walkthrough.html
@@ -77,12 +80,22 @@ breach-responder-demo.mp4 / .en.srt
 
 ## Test data
 
-All files under `test-pack/Personal/` are **fictional sample data**. The person (Jordan Sample),
+All files under `test-pack/test-pack/Personal/` are **fictional sample data**. The person (Jordan Sample),
 address, `555-01xx` phone, `example.com` email, passport `SAMPLE0000` and the public test card
-number `4111 1111 1111 1111` are all made up. See `test-pack/TEST-PLAN.md` for the full plan.
+number `4111 1111 1111 1111` are all made up. See `test-pack/test-pack/TEST-PLAN.md` for the full plan.
+
+## Packaging
+
+Build the versioned upload package from the Skill folder (the zip is gitignored). Bump the version
+for each new build; never overwrite a released zip.
+
+```powershell
+Compress-Archive -Path breach-responder-skill/breach-responder -DestinationPath breach-responder-1.0.0.zip
+```
 
 ## Status
 
-The package passes the official `uliya-skill-kit` static checker with 0 errors and 0 warnings.
+The package passed the official `uliya-skill-kit` 0.7.3 static checker with 0 errors and 0 warnings
+before the step 1a / 4 / 5a hardening changes; re-run the checker on the current `SKILL.md` before upload.
 Runtime behavior (installation, expert execution, OCR/search quality, approval flow) can only be
 confirmed on a real UGREEN AI NAS and is validated during the finals using the included test pack.

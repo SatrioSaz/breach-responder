@@ -36,6 +36,7 @@ Do not ask for card numbers, ID numbers, passwords or other secret values. Do no
 Before each delegation, replace every `{…}` field with the real value:
 
 - `{company}`, `{aliases}`, `{folders}`, `{time range}`: from the confirmed user input.
+- `{name terms}`: built from `{company}` and `{aliases}` as described in step 1a.
 - `{document list}`, `{image list}`: only real file paths returned by step 1 in this run.
 - `{save folder}`, `{file name}`, `{report text}`: from step 5, after the user approves them.
 
@@ -59,8 +60,10 @@ Many relevant files have unhelpful names such as `scan_001.jpg` or `INV-554.pdf`
 **1a. By file or folder name**
 
 ```text
-delegate --target file-agent --instruction 'Inside only these folders: {folders}, find files whose file name or folder path contains any of these terms, ignoring upper and lower case: {company}, {aliases}. Only include files modified within {time range}. Include documents, PDFs, spreadsheets, text files, images and screenshots. Read only: do not open, move, rename, tag or delete anything, and do not search outside these folders. Return the full path, file type, size and modified date of each match. If nothing matches, return an empty list and say so.'
+delegate --target file-agent --instruction 'Inside only these folders: {folders}, find files whose file name or folder path contains any of these terms: {name terms}. Search for each term separately. File-name matching may be case-sensitive, so try each term in lower case, Title Case and UPPER CASE (for example *acme*, *Acme*, *ACME*). Also find folders whose name matches a term, and list every file inside those folders and their subfolders, even if the file name itself does not match (for example acme/IMG_0001.jpg). Only include files modified within {time range}. Include documents, PDFs, spreadsheets, text files, images and screenshots. Read only: do not open, move, rename, tag or delete anything, and do not search outside these folders. Return the full path, file type, size and modified date of each match, and say whether it matched by file name or by folder name. If nothing matches, return an empty list and say so.'
 ```
+
+Before sending 1a, build `{name terms}` from the company name and aliases: keep each full name, and add its distinctive word on its own (for example `Acme Insurance` → `Acme Insurance`, `Acme`; `acme-insurance.example` → `acme-insurance`). Never use a generic word on its own, such as Insurance, Bank, Bancorp, Mutual, Group, Holdings, Services, Inc, Ltd, LLC, Co or Corp, because it would match unrelated companies and whole folders. A short distinctive word can still match another company's files, so a file found only by 1a is confirmed in step 2 or 3; if that step says it does not relate to {company}, drop it from the report.
 
 **1b. By document content**
 
@@ -83,7 +86,7 @@ If all three searches return empty results, tell the user: "No files linked to {
 Run only if the evidence list has documents. Read [references/pii-taxonomy.md](references/pii-taxonomy.md) first. Send at most 20 files per delegation; for a longer list, send several batches.
 
 ```text
-delegate --target document-agent --instruction 'Read each of these files: {document list}. For each file, identify which categories of personal data about the user appear in it, using only these categories: full name; home or mailing address; phone number; email address; date of birth; passport or national ID number; payment-card details; bank account; login credentials; government or tax identifier; signature or photographed identity document; health or insurance identifier. For each category found, return the file path, the page or section, and a confidence level of high, medium or low. Return the category and location only: never quote, return or partly reveal the actual value, such as a card, ID, account number or password. Read only. List every file you could not read, such as encrypted or damaged files, with the reason, and continue with the others.'
+delegate --target document-agent --instruction 'Read each of these files: {document list}. For each file, first say whether it relates to the company {company}, also known as {aliases}, or to a different company. Then identify which categories of personal data about the user appear in it, using only these categories: full name; home or mailing address; phone number; email address; date of birth; passport or national ID number; payment-card details; bank account; login credentials; government or tax identifier; signature or photographed identity document; health or insurance identifier. For each category found, return the file path, the page or section, and a confidence level of high, medium or low. Return the category and location only: never quote, return or partly reveal the actual value, such as a card, ID, account number or password. Read only. List every file you could not read, such as encrypted or damaged files, with the reason, and continue with the others.'
 ```
 
 ## Step 3: Classify personal data in photos and screenshots (read-only)
@@ -98,6 +101,8 @@ delegate --target photo-agent --instruction 'Read the visible text in each of th
 
 Using only the real results from steps 1 to 3:
 
+- **Value check first.** Some experts read raw text from files and images, so a result may contain a value despite the instruction. Before writing anything, scan every expert result for actual values: card or account digits (including partly masked forms such as `**** 1111` or "ending in 1111"), passport or ID numbers, passwords, security questions or answers, or any long run of digits that is not a date, page number or file name. Never copy such a value into the report, the chat or the saved file. Keep only its category and source file, and if an expert returned a value, add a line for that file under **Needs human review**: "An expert returned a raw value for this file; it was removed from this report."
+- Drop every file that step 2 or 3 says relates to a different company.
 - Put high- and medium-confidence findings in the exposure list, grouped by category, each with its source files.
 - Put low-confidence findings and every unreadable or unclear file in the **Needs human review** list. They are not counted as confirmed exposure.
 - Build the action checklist from [references/action-checklist.md](references/action-checklist.md), highest risk first, each item tied to its source file.
@@ -107,11 +112,23 @@ Show the full report to the user in chat.
 
 ## Step 5: Save the report (changes data, needs approval)
 
-Propose a folder and a new file name, for example `{company} breach report.md` in a folder the user authorized. Ask: "Save this report as a new file at this location?" Run the delegation only after the user says yes. If the user declines, keep the report in chat and save nothing.
+Propose a folder and a new file name, for example `{company} breach report.md` in a folder the user authorized.
+
+**5a. Check the name is free (read-only).** The save action has no "do not overwrite" option, so check first:
 
 ```text
-delegate --target knowledge-agent --instruction 'Save the Markdown text below as a new file named {file name} in the folder {save folder}. Create a new file only: if a file with that name already exists, do not overwrite it; report the conflict and wait for a new name. This writes data, so go through the normal approval flow before writing. Return the saved file path and whether the save was verified. Content: {report text}'
+delegate --target file-agent --instruction 'Read only: check whether a file named {file name} already exists in the folder {save folder}. Do not create, open or change anything. Return exists or does not exist, and the full path if it exists.'
 ```
+
+If the file exists, tell the user and ask for a different name, then repeat 5a with the new name. Never save over an existing file. If 5a fails, say so and ask the user to confirm a name that is certain to be new, such as one with today's date in it.
+
+**5b. Save (changes data).** Ask: "Save this report as a new file at this location?" Run the delegation only after the user says yes. If the user declines, keep the report in chat and save nothing.
+
+```text
+delegate --target knowledge-agent --instruction 'Save the Markdown text below as a new file named {file name} in the folder {save folder}. Create a new file only and never overwrite an existing file. This writes data, so go through the normal approval flow before writing. Return the saved file path and whether the save was verified. Content: {report text}'
+```
+
+Report the saved path exactly as the result returns it. If it differs from the name the user approved (for example a number was added), tell the user the actual name. Report the report as saved only if the result says the save was verified.
 
 # Completion and failure
 

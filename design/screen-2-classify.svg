@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Inter, system-ui, sans-serif">
+  <rect width="1280" height="720" fill="#0B121A"/>
+  <rect width="1280" height="720" fill="#0F1720"/>
+
+  <!-- ===== HEADER ===== -->
+  <g transform="translate(40,28)">
+    <rect width="40" height="40" rx="10" fill="#123A2E"/>
+    <g transform="translate(9,9)" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 1l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V4l8-3z"/>
+      <path d="M8 11l2 2 4-4"/>
+    </g>
+    <text x="52" y="18" fill="#E6EDF3" font-size="20" font-weight="700">Breach Responder</text>
+    <text x="52" y="36" fill="#9FB0C2" font-size="13">An AI Skill that runs on your AI NAS</text>
+    <g transform="translate(905,6)">
+      <rect width="295" height="30" rx="15" fill="#123A2E"/>
+      <g transform="translate(16,7)" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="0" y="6" width="14" height="10" rx="2"/>
+        <path d="M3 6V3a4 4 0 0 1 8 0v3"/>
+      </g>
+      <text x="40" y="20" fill="#A7F3D0" font-size="13" font-weight="500">Local only · nothing leaves your NAS</text>
+    </g>
+  </g>
+
+  <!-- ===== STEP NAV ===== -->
+  <g transform="translate(40,88)">
+    <!-- Ask (done) -->
+    <g transform="translate(0,0)">
+      <rect width="232" height="44" rx="10" fill="#16212E" stroke="#2B4A3E"/>
+      <g transform="translate(16,14)" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8l5 5 9-10"/></g>
+      <text x="48" y="27" fill="#A7F3D0" font-size="14">Ask</text>
+    </g>
+    <!-- Find (done) -->
+    <g transform="translate(240,0)">
+      <rect width="232" height="44" rx="10" fill="#16212E" stroke="#2B4A3E"/>
+      <g transform="translate(16,14)" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8l5 5 9-10"/></g>
+      <text x="48" y="27" fill="#A7F3D0" font-size="14">Find</text>
+    </g>
+    <!-- Classify (active) -->
+    <g transform="translate(480,0)">
+      <rect width="232" height="44" rx="10" fill="#34D399"/>
+      <circle cx="26" cy="22" r="12" fill="#06291D"/>
+      <text x="26" y="26" fill="#34D399" font-size="12" font-weight="700" text-anchor="middle">3</text>
+      <text x="48" y="27" fill="#06291D" font-size="14" font-weight="600">Classify</text>
+    </g>
+    <!-- Review -->
+    <g transform="translate(720,0)">
+      <rect width="232" height="44" rx="10" fill="#16212E" stroke="#263445"/>
+      <circle cx="26" cy="22" r="12" fill="none" stroke="#3A4B5E"/>
+      <text x="26" y="26" fill="#9FB0C2" font-size="12" text-anchor="middle">4</text>
+      <text x="48" y="27" fill="#9FB0C2" font-size="14">Review</text>
+    </g>
+    <!-- Save -->
+    <g transform="translate(960,0)">
+      <rect width="232" height="44" rx="10" fill="#16212E" stroke="#263445"/>
+      <circle cx="26" cy="22" r="12" fill="none" stroke="#3A4B5E"/>
+      <text x="26" y="26" fill="#9FB0C2" font-size="12" text-anchor="middle">5</text>
+      <text x="48" y="27" fill="#9FB0C2" font-size="14">Save</text>
+    </g>
+  </g>
+
+  <!-- ===== MAIN PANEL ===== -->
+  <g transform="translate(40,148)">
+    <rect width="1200" height="488" rx="16" fill="#16212E" stroke="#263445"/>
+
+    <g transform="translate(28,24)">
+      <!-- title row -->
+      <text x="0" y="12" fill="#9FB0C2" font-size="13" font-weight="600" letter-spacing="1.04">STAGES 2 + 3 · READ DOCUMENTS AND SCREENSHOTS</text>
+      <text x="0" y="42" fill="#E6EDF3" font-size="22" font-weight="700">7 types of your personal data found in 6 files</text>
+
+      <!-- agent chips (right) -->
+      <g transform="translate(900,2)">
+        <rect width="110" height="30" rx="8" fill="#0F1720" stroke="#3A4B5E"/>
+        <text x="55" y="20" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace" text-anchor="middle">document-agent</text>
+        <rect x="118" width="92" height="30" rx="8" fill="#0F1720" stroke="#3A4B5E"/>
+        <text x="164" y="20" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace" text-anchor="middle">photo-agent</text>
+      </g>
+
+      <!-- privacy notice -->
+      <g transform="translate(0,58)">
+        <rect width="1144" height="44" rx="10" fill="#1E2B3A"/>
+        <g transform="translate(16,13)" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 9s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z"/>
+          <path d="M2 2l16 16"/>
+        </g>
+        <text x="46" y="28" fill="#C7D3DF" font-size="14">Values are never shown or saved — only the <tspan font-weight="700" fill="#E6EDF3">type</tspan> of data and the <tspan font-weight="700" fill="#E6EDF3">file</tspan> it is in.</text>
+      </g>
+
+      <!-- exposure list -->
+      <g transform="translate(0,118)">
+        <rect width="1144" height="266" rx="12" fill="#16212E" stroke="#263445"/>
+
+        <!-- row template: 38px tall -->
+        <!-- 1 -->
+        <g transform="translate(0,0)">
+          <text x="16" y="25" fill="#E6EDF3" font-size="14" font-weight="600">Payment-card details</text>
+          <text x="240" y="25" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace">INV-554.pdf</text>
+          <rect x="1050" y="11" width="78" height="22" rx="11" fill="#123A2E"/>
+          <text x="1089" y="26" fill="#A7F3D0" font-size="12" font-weight="600" text-anchor="middle">High</text>
+        </g>
+        <line x1="0" y1="38" x2="1144" y2="38" stroke="#263445"/>
+        <!-- 2 -->
+        <g transform="translate(0,38)">
+          <text x="16" y="25" fill="#E6EDF3" font-size="14" font-weight="600">Login credentials</text>
+          <text x="240" y="25" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace">acme-account.txt</text>
+          <rect x="1050" y="11" width="78" height="22" rx="11" fill="#123A2E"/>
+          <text x="1089" y="26" fill="#A7F3D0" font-size="12" font-weight="600" text-anchor="middle">High</text>
+        </g>
+        <line x1="0" y1="76" x2="1144" y2="76" stroke="#263445"/>
+        <!-- 3 -->
+        <g transform="translate(0,76)">
+          <text x="16" y="25" fill="#E6EDF3" font-size="14" font-weight="600">Passport or national ID</text>
+          <text x="240" y="25" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace">scan_004.jpg, claim-form-signed.pdf</text>
+          <rect x="1050" y="11" width="78" height="22" rx="11" fill="#123A2E"/>
+          <text x="1089" y="26" fill="#A7F3D0" font-size="12" font-weight="600" text-anchor="middle">High</text>
+        </g>
+        <line x1="0" y1="114" x2="1144" y2="114" stroke="#263445"/>
+        <!-- 4 -->
+        <g transform="translate(0,114)">
+          <text x="16" y="25" fill="#E6EDF3" font-size="14" font-weight="600">Date of birth</text>
+          <text x="240" y="25" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace">claim-form-signed.pdf</text>
+          <rect x="1050" y="11" width="78" height="22" rx="11" fill="#123A2E"/>
+          <text x="1089" y="26" fill="#A7F3D0" font-size="12" font-weight="600" text-anchor="middle">High</text>
+        </g>
+        <line x1="0" y1="152" x2="1144" y2="152" stroke="#263445"/>
+        <!-- 5 -->
+        <g transform="translate(0,152)">
+          <text x="16" y="25" fill="#E6EDF3" font-size="14" font-weight="600">Home address</text>
+          <text x="240" y="25" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace">acme-policy-2022.pdf, claim-form-signed.pdf</text>
+          <rect x="1050" y="11" width="78" height="22" rx="11" fill="#123A2E"/>
+          <text x="1089" y="26" fill="#A7F3D0" font-size="12" font-weight="600" text-anchor="middle">High</text>
+        </g>
+        <line x1="0" y1="190" x2="1144" y2="190" stroke="#263445"/>
+        <!-- 6 -->
+        <g transform="translate(0,190)">
+          <text x="16" y="25" fill="#E6EDF3" font-size="14" font-weight="600">Phone number</text>
+          <text x="240" y="25" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace">claim-form-signed.pdf</text>
+          <rect x="1044" y="11" width="90" height="22" rx="11" fill="#3A2C12"/>
+          <text x="1089" y="26" fill="#FCD9A0" font-size="12" font-weight="600" text-anchor="middle">Medium</text>
+        </g>
+        <line x1="0" y1="228" x2="1144" y2="228" stroke="#263445"/>
+        <!-- 7 -->
+        <g transform="translate(0,228)">
+          <text x="16" y="25" fill="#E6EDF3" font-size="14" font-weight="600">Email address</text>
+          <text x="240" y="25" fill="#C7D3DF" font-size="13" font-family="'JetBrains Mono', ui-monospace, monospace">Screenshot 2022-03-14 at 10.21.png</text>
+          <rect x="1044" y="11" width="90" height="22" rx="11" fill="#3A2C12"/>
+          <text x="1089" y="26" fill="#FCD9A0" font-size="12" font-weight="600" text-anchor="middle">Medium</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ===== FOOTER ===== -->
+  <g transform="translate(40,672)">
+    <text x="0" y="20" fill="#9FB0C2" font-size="13">Prototype walkthrough · sample data · not a recording of a real NAS run</text>
+  </g>
+</svg>
